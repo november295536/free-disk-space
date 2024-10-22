@@ -18,23 +18,40 @@ jobs:
   free-disk-space:
     runs-on: ubuntu-latest
     steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # Remove all the pre-cached tools, this might remove tools
+          # that are actually needed, if set to "true" but
+          # frees about 6 GB of disk space. See more details below.
+          # Default: false
+          tool-cache: false
 
-    - name: Free Disk Space (Ubuntu)
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: false
-        
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
-        swap-storage: true
+          # Remove Android runtime
+          # Default: true
+          android: true
+
+          # Remove .NET runtime
+          # Default: true
+          dotnet: true
+
+          # Remove Haskell runtime
+          # Default: true
+          haskell: true
+
+          # Remove large packages
+          # Default: true
+          large-packages: true
+
+          # Remove Docker images
+          # Default: true
+          docker-images: true
+
+          # Remove swap storage
+          # Default: true
+          swap-storage: true
 ```
+
 ## Options
 
 Most of the options are self-explanatory.
@@ -46,6 +63,7 @@ The option `tool-cache` removes all the pre-cached tools (Node, Go, Python, Ruby
 This GitHub Actions came around because I kept rewriting the same few lines of `rm -rf` code.
 
 Here are a few sources of inspiration:
+
 - https://github.community/t/bigger-github-hosted-runners-disk-space/17267/11
 - https://github.com/apache/flink/blob/master/tools/azure-pipelines/free_disk_space.sh
 - https://github.com/ShubhamTatvamasi/free-disk-space-action
@@ -55,6 +73,7 @@ Here are a few sources of inspiration:
 ## Typical Output
 
 The amount of space storage saved by each option on an `ubuntu-20.04.4` runner is summarized here:
+
 ```
 => Android library: Saved 14GiB
 => .NET runtime: Saved 2.7GiB
@@ -67,6 +86,7 @@ Total: Saved 31GiB
 ```
 
 The log output of a typical example (with all options set to `true`) looks like this:
+
 ```
 ================================================================================
 BEFORE CLEAN-UP:
@@ -160,7 +180,7 @@ The following packages will be REMOVED:
   dotnet-targeting-pack-5.0 dotnet-targeting-pack-6.0
 0 upgraded, 0 newly installed, 25 to remove and 14 not upgraded.
 After this operation, 1183 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -250,7 +270,7 @@ The following packages will be REMOVED:
   llvm-12-tools
 0 upgraded, 0 newly installed, 17 to remove and 14 not upgraded.
 After this operation, 804 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -861,7 +881,7 @@ The following packages will be REMOVED:
   php8.1-zip php8.1-zmq
 0 upgraded, 0 newly installed, 142 to remove and 14 not upgraded.
 After this operation, 158 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -1081,7 +1101,7 @@ The following packages will be REMOVED:
   mongodb-org-shell mongodb-org-tools
 0 upgraded, 0 newly installed, 9 to remove and 14 not upgraded.
 After this operation, 461 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -1142,7 +1162,7 @@ The following packages will be REMOVED:
   mysql-server-core-8.0 snmp sphinxsearch
 0 upgraded, 0 newly installed, 12 to remove and 14 not upgraded.
 After this operation, 245 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -1189,7 +1209,7 @@ The following packages will be REMOVED:
   monodoc-manual powershell x11-utils xvfb
 0 upgraded, 0 newly installed, 21 to remove and 14 not upgraded.
 After this operation, 3168 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -1321,7 +1341,7 @@ The following packages will be REMOVED:
   shtool x11-xkb-utils xserver-common xul-ext-ubufox
 0 upgraded, 0 newly installed, 198 to remove and 14 not upgraded.
 After this operation, 433 MB disk space will be freed.
-(Reading database ... 
+(Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
